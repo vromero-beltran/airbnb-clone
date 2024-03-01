@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 export default function Header() {
   return (
-<header className="header">
+<header className="flex justify-between">
         <a href="" className="a1 gap-1">
           <svg
             xmlns="http://www.w3.org/2000/svg"
