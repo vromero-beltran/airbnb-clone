@@ -12,15 +12,12 @@ export default function RegisterPage() {
             name,
             email,
             password,
-          })
-          .then((response) => {
-            console.log(response);
-        })
+          });
+          alert("User registered successfully");
         } catch (error) {
-      alert("User already exists");
+          alert("User already exists");
+        }
     }
-    alert("User registered successfully");
-}
   return (
     <div className="mt-4 grow flex items-center justify-around">
       <div className="mb-64">
