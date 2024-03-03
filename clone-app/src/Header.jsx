@@ -6,7 +6,7 @@ export default function Header() {
   const { user } = useContext(UserContext);
   return (
 <header className="flex justify-between">
-        <a href="" className="a1 gap-1">
+        <Link to={'/'} className="a1 gap-1">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -22,7 +22,7 @@ export default function Header() {
             />
           </svg>
           <span className="span1">Clone App</span>
-        </a>
+        </Link>
         <div className="container1">
           <div className="padding1">Anywhere</div>
           <div className="border1"></div>

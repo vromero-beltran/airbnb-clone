@@ -81,3 +81,9 @@ app.get('/profile', async (req, res) => {
     res.status(401).json("Unauthorized");
   }
 });
+
+app.get('/logout', (req, res) => {
+  res.cookie('token', '').json(true);
+})
+
+app.listen(4000);
