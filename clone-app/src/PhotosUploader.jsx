@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 
 export default function PhotoUpLoader(addedPhotos,onChange) {
@@ -29,6 +30,21 @@ export default function PhotoUpLoader(addedPhotos,onChange) {
         });
       });
   }
+  async function addPhotoByFile(e) {
+    const files = e.target.files;
+    const data = new FormData();
+    data.set("photos", files);
+    axios.post('/upload', data {
+      headers: {
+        'Content-Type':'multipart/form-data'
+      }
+    }).then(response => {
+      const {data:filename} = response;
+      setAddedPhotos(prev => {
+        return [...prev, filename];
+      });
+    })
+    }
   return (
     <>
       <div className="flex gap-2">
@@ -48,7 +64,7 @@ export default function PhotoUpLoader(addedPhotos,onChange) {
       <div className="mt-2 grid gap-2 grid-cols-3 lg:grid-cols-6 md:grid-cols-4">
         {addedPhotos.length > 0 &&
           addedPhotos.map((link) => (
-            <div classname="h-3 flex" key={link}>
+            <div className="h-3 flex" key={link}>
               <img
                 className="rounded-2xl w-full object-cover"
                 src={"http://localhost:4000/uploads/" + link}
