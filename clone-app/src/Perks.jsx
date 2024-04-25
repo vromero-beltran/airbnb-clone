@@ -1,8 +1,16 @@
-export default function Perks({ selected, onChange }) {
+export default function Perks({selected, onChange}) {
+  function handleOnClick(e) {
+    const {checked,name} = e.target;
+    if (checked) {
+      onChange([...selected,name])
+    } else {
+      onChange([...selected.filter(selectName => selectedName !== name)]);
+    }
+  }
   return (
     <>
       <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer">
-        <input type="checkbox" />
+        <input type="checkbox" name="wifi" onChange={handleOnClick} />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -21,7 +29,7 @@ export default function Perks({ selected, onChange }) {
         <span>Wifi</span>
       </label>
       <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer">
-        <input type="checkbox" />
+        <input type="checkbox" name="parking" onChange={handleOnClick} />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -40,7 +48,7 @@ export default function Perks({ selected, onChange }) {
         <span>Parking</span>
       </label>
       <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer">
-        <input type="checkbox" />
+        <input type="checkbox" name="laundry" onChange={handleOnClick} />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -59,7 +67,7 @@ export default function Perks({ selected, onChange }) {
         <span>Laundry</span>
       </label>
       <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer">
-        <input type="checkbox" />
+        <input type="checkbox" name="ac" onChange={handleOnClick} />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -78,7 +86,7 @@ export default function Perks({ selected, onChange }) {
         <span>AC</span>
       </label>
       <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer">
-        <input type="checkbox" />
+        <input type="checkbox" name="heating" onChange={handleOnClick} />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -96,7 +104,7 @@ export default function Perks({ selected, onChange }) {
         <span>Heating</span>
       </label>
       <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer">
-        <input type="checkbox" />
+        <input type="checkbox" name="smoke alarm" onChange={handleOnClick} />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -115,7 +123,7 @@ export default function Perks({ selected, onChange }) {
         <span>Smoke Alarm</span>
       </label>
       <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer">
-        <input type="checkbox" />
+        <input type="checkbox" name="private entrance" onChange={handleOnClick} />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -134,7 +142,7 @@ export default function Perks({ selected, onChange }) {
         <span>Private Entrance</span>
       </label>
       <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer">
-        <input type="checkbox" />
+        <input type="checkbox" name="kitchen" onChange={handleOnClick} />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -153,7 +161,7 @@ export default function Perks({ selected, onChange }) {
         <span>Kitchen</span>
       </label>
       <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer">
-        <input type="checkbox" />
+        <input type="checkbox" name="tv" onChange={handleOnClick} />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -172,7 +180,7 @@ export default function Perks({ selected, onChange }) {
         <span>TV</span>
       </label>
       <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer">
-        <input type="checkbox" />
+        <input type="checkbox" name="hiar dryer" onChange={handleOnClick} />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -191,7 +199,7 @@ export default function Perks({ selected, onChange }) {
         <span>Hair Dryer</span>
       </label>
       <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer">
-        <input type="checkbox" />
+        <input type="checkbox" name="carbon monoxide alarm" onChange={handleOnClick} />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -207,10 +215,10 @@ export default function Perks({ selected, onChange }) {
           />
         </svg>
 
-        <span>Carben Monoxide Alarm</span>
+        <span>Carbon Monoxide Alarm</span>
       </label>
       <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer">
-        <input type="checkbox" />
+        <input type="checkbox" name="pets allowed" onChange={handleOnClick} />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -229,7 +237,7 @@ export default function Perks({ selected, onChange }) {
         <span>Pets Allowed</span>
       </label>
       <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer">
-        <input type="checkbox" />
+        <input type="checkbox" name="long trm stay allowed" onChange={handleOnClick} />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
