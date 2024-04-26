@@ -1,9 +1,11 @@
 import { useState } from "react";
-import PhotoUplaoder from "../PhotosUplaoder.js";
+import PhotoUploader from "../PhotosUploader.js";
 import Perks from "../Perks.jsx";
 import AccountNav from "../AccountNav.jsx";
+import { useParams } from "react-router-dom";
 
 export default function PlacesFormPage() {
+  const {id} = useParams();
     const [title, setTitle] = useState("");
     const [address, setAddress] = useState("");
     const [addedPhotos, setAddedPhotos] = useState([]);
@@ -15,6 +17,24 @@ export default function PlacesFormPage() {
     const [checkOut, setCheckOut] = useState("");
     const [maxGuest, setMaxGuest] = useState(1);
     const [redirect, setRedirect] = useState(false);
+
+    useEffect(() => {
+      if (!id) {
+        return;
+      }
+      axios.get("/places/"+id).then(response => {
+        const {data} = response;
+        setTitle(data.title);
+        setAddress(data.address);
+        setAddedPhotos(data.photos);
+        setDescription(data.description);
+        setPerks(data.perks);
+        setExtraInfo(data.extraInfo);
+        setCheckIn(data.checkIn);
+        setCheckOut(data.checkOut);
+        setMaxGuest(data.maxGuest);
+      });
+    }, [id]);
 
     function inputHeader(text) {
         return <h2 className="text-2xl mt-4">{text}</h2>;
@@ -30,14 +50,24 @@ export default function PlacesFormPage() {
           </>
         );
     }
-    async function addNewPlace(e) {
-          e.preventDefault();
-          await axios.post('/places', {
-            title, address, addedPhotos,
-            description, perks, extraInfro,
-            checkIn, checkOut, maxGuest
-          });
-          setRedirectToPlacesList(true);
+    async function savePlace(e) {
+      e.preventDefault();
+      const placeData ={
+        title, address, addedPhotos,
+        description, perks, extraInfro,
+        checkIn, checkOut, maxGuest
+      };
+      if (id) {
+        //update
+        await axios.put('/places', {
+          id, ...placeData
+        });
+        setRedirect(true);
+      } else {
+        //new place
+      }
+      await axios.post('/places', placeData);
+      setRedirect(true);
     }
     async function addPhotoByFile(e) {
         const files = e.target.files;
@@ -61,7 +91,7 @@ export default function PlacesFormPage() {
     return (
         <div>
           <AccountNav />
-          <form onSubmit={addNewPlace}>
+          <form onSubmit={savePlace}>
             {preInput("Title", "Title for your place")}
             <input
               type="text"
@@ -77,7 +107,7 @@ export default function PlacesFormPage() {
               placeholder="Address, for example: 123 Main St"
             />
             {preInput("Photos", "Photos for your place")}
-            <PhotoUpLoader addedPhotos={addedPhotos} onChange={setAddedPhotos} />
+            <PhotoUploader addedPhotos={addedPhotos} onChange={setAddedPhotos} />
             {preInput("Descriptions", "Describe your place")}
             <textarea
               value={description}
