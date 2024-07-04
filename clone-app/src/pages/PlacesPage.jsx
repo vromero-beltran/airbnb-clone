@@ -6,10 +6,10 @@ import axios from "axios";
 export default function PlacesPage() {
   const [places, setplaces] = useSate([]);
   useEffect(() => {
-    axios.get("/places").then(({ data }) => {
+    axios.get("/user-places").then(({ data }) => {
       setplaces(data);
     });
-  }, []);
+  }, [setplaces]);
   return (
     <div>
       <AccountNav />

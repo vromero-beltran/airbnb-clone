@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PhotoUploader from "../PhotosUploader.js";
 import Perks from "../Perks.jsx";
 import AccountNav from "../AccountNav.jsx";
 import { useParams } from "react-router-dom";
+import axios from "axios";
+import { Navigate } from "react-router-dom";
 
 export default function PlacesFormPage() {
   const {id} = useParams();
@@ -19,9 +21,11 @@ export default function PlacesFormPage() {
     const [redirect, setRedirect] = useState(false);
 
     useEffect(() => {
+
       if (!id) {
         return;
       }
+
       axios.get("/places/"+id).then(response => {
         const {data} = response;
         setTitle(data.title);
@@ -69,21 +73,24 @@ export default function PlacesFormPage() {
       await axios.post('/places', placeData);
       setRedirect(true);
     }
-    async function addPhotoByFile(e) {
-        const files = e.target.files;
-        const data = new FormData();
-        data.set("photos", files);
-        axios.post('/upload', data {
-          headers: {
-            'Content-Type':'multipart/form-data'
-          }
-        }).then(response => {
-          const {data:filename} = response;
-          setAddedPhotos(prev => {
-            return [...prev, filename];
-          });
-        })
-        }
+
+    // This function might have to be deleted later
+    // async function addPhotoByFile(e) {
+    //     const files = e.target.files;
+    //     const data = new FormData();
+    //     data.set("photos", files);
+    //     axios.post('/upload', data, {
+    //       headers: {
+    //         'Content-Type':'multipart/form-data'
+    //       }
+    //     }).then(response => {
+    //       const {data:filename} = response;
+    //       setAddedPhotos(prev => {
+    //         return [...prev, filename];
+    //       });
+    //     })
+    //     }
+
         setRedirect(true);
         if (redirect) {
           return <Navigate to = {'/account/places'} />

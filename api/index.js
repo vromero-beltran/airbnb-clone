@@ -132,7 +132,7 @@ app.post('/places', (req,res) => {
   });
 });
 
-app.get('/places', (res, res) => {
+app.get('/user-places', (res, res) => {
   const token = req.cookies.token;
   jwt.verify(token, jwtSecret, {}, async (err, userData) => {
     const {id} = userData;
@@ -164,6 +164,10 @@ app.put('/places/:id', async (req,res) => {
     }
   });
 });
+
+app.get('/places', async (req,res) => {
+  res.json( await Place.find() );
+})
 
 
 app.listen(4000);
