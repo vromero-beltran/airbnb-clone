@@ -187,13 +187,12 @@ app.post("/bookings", (req, res) => {
       name,
       phone,
       price,
-    }).then((err,doc) => {
-    if (err) {
-      res.status(422).json({ error: err.message });
-    } else {
+    }).then((doc) => {
       res.json(doc);
-    }
     })
+    .catch((err) => {
+      res.status(422).json({ error: err.message });
+    });
   });
 
 app.listen(4000);
