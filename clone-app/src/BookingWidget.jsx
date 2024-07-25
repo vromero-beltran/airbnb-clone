@@ -6,6 +6,8 @@ export function BookingWidget({place}) {
     const [checkIn, setCheckIn] = useState('');
     const [checkOut, setCheckOut] = useState("");
     const [numberOfGuests, setNumberOfGuests] = useState(1);
+    const [name, setName] = useState("");
+    const [mobile, setMobile] = useState("");
     let numberOfNights = 0;
     if (checkIn && checkOut) {
         numberOfNights = differenceInCalendarDays(new Date(checkOut), new Date(checkIn));
@@ -35,7 +37,19 @@ export function BookingWidget({place}) {
                     <input type="number" 
                         value={numberOfGuests} 
                         onChange={ev => setNumberOfGuests(ev.target.value)}/>
+            </div>
+            {numberOfNights > 0 && (
+                <div className="my-3 py-4 px-4 border-t">
+                    <label>Your Full Name</label>
+                    <input type="text" 
+                            value={name} 
+                            onChange={ev => setName(ev.target.value)}/>
+                    <label>Your Phone Number</label>
+                    <input type="tel" 
+                            value={mobile} 
+                            onChange={ev => setMobile(ev.target.value)}/>
                 </div>
+            )}
         </div>
         <button className="primary mt-4">
             Book this place

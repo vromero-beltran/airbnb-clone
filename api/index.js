@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("./models/User.js");
 const Place = require('./models/Places.js');
+const Booking = require("./models/Booking.js");
 const cookieParcer = require("cookie-parser");
 const imageDownloader = require("image-downloader");
 const multer = require("multer");
@@ -89,7 +90,7 @@ app.get('/profile', async (req, res) => {
 
 app.get('/logout', (req, res) => {
   res.cookie('token', '').json(true);
-})
+});
 
 app.post('/upload-by-link', async (req, res) => {
   const { link } = req.body;
@@ -99,7 +100,7 @@ app.post('/upload-by-link', async (req, res) => {
     dest: __dirname + "/uploads" + newName,
   });
   res.json(newName);
-})
+});
 
 const storage = multer({dest:'uploads'})
 app.post('/upload', storage.array('photos', 100), (req, res) => {
@@ -172,7 +173,27 @@ app.put('/places/:id', async (req,res) => {
 
 app.get('/places', async (req,res) => {
   res.json( await Place.find() );
-})
+});
 
+app.post("/bookings", (req, res) => {
+  const {
+    place, checkIn, checkOut, numberOfGuest, name, phone, price
+  } = req.body;
+    Booking.create({
+      place,
+      checkIn,
+      checkOut,
+      numberOfGuest,
+      name,
+      phone,
+      price,
+    }).then((err,doc) => {
+    if (err) {
+      res.status(422).json({ error: err.message });
+    } else {
+      res.json(doc);
+    }
+    })
+  });
 
 app.listen(4000);
