@@ -4,6 +4,10 @@ const bookingSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     required: true,
     },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+    },
     checkIn: {
         type: Date,
         required: true,

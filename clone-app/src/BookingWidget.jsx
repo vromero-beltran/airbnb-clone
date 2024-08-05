@@ -1,8 +1,9 @@
 import { differenceInCalendarDays } from 'date-fns';
 import PropTypes from 'prop-types'
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import axios from "axios";
 import { Navigate } from 'react-router-dom';
+import { UserContext } from "./UserContext";
 
 export function BookingWidget({place}) {
     const [checkIn, setCheckIn] = useState('');
@@ -11,6 +12,14 @@ export function BookingWidget({place}) {
     const [name, setName] = useState("");
     const [Phone, setPhone] = useState("");
     const [redirect, setRedirect] = useState(false);
+    const { user } = useContext(UserContext);
+
+    useEffect(() => {
+        if (user) {
+            setName(user.name);
+        }
+    }, [user]);
+    
 
     let numberOfNights = 0;
     if (checkIn && checkOut) {
@@ -30,7 +39,6 @@ export function BookingWidget({place}) {
         const bookingId = response.data.id;
         setRedirect(`/account/bookings/${bookingId}`);
     }
-
     if (redirect) {
         return <Navigate to={redirect} />;
     }
